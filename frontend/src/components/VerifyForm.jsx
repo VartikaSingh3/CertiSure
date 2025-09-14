@@ -1,4 +1,3 @@
-// src/components/VerifyForm.jsx
 import { useState } from "react";
 
 export default function VerifyForm({ onVerify }) {
@@ -12,10 +11,17 @@ export default function VerifyForm({ onVerify }) {
   };
 
   return (
-    <form onSubmit={handle} className="p-4 bg-white rounded-xl shadow-sm">
-      <h4 className="font-semibold text-indigo-700">Verify by Hash / ID</h4>
-      <input value={hash} onChange={(e) => setHash(e.target.value)} placeholder="Certificate hash or ID" className="w-full mt-3 p-2 border rounded" />
-      <button className="mt-3 px-4 py-2 bg-green-600 text-white rounded-lg">Verify</button>
+    <form onSubmit={handle} className="p-6 glass-effect rounded-3xl">
+      <h4 className="font-semibold text-gray-800 text-lg mb-4">Verify by Hash / ID</h4>
+      <input 
+        value={hash} 
+        onChange={(e) => setHash(e.target.value)} 
+        placeholder="Enter certificate hash or ID" 
+        className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4"
+      />
+      <button className="w-full btn-primary text-white py-3 rounded-xl font-semibold">
+        Verify Certificate
+      </button>
     </form>
   );
 }

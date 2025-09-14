@@ -1,32 +1,45 @@
-// src/components/dashboard/EmployerDashboard.jsx
-import QRScanner from "../QRScanner";
-import UploadForm from "../UploadFrom";
 import { useState } from "react";
+import QRScanner from "../QRScanner";
+import VerifyForm from "../VerifyForm";
+import UploadForm from "../UploadFrom";
 
 export default function EmployerDashboard() {
-  const [lastDetected, setLastDetected] = useState(null);
+  const [activeTab, setActiveTab] = useState("scan");
 
   return (
     <div className="max-w-6xl mx-auto p-6 mt-20">
-      <h1 className="text-3xl font-bold text-indigo-700 mb-6">Employer Dashboard</h1>
-
-      <div className="grid md:grid-cols-3 gap-6">
-        {/* QR scanner */}
-        <div className="col-span-1 bg-white/80 p-6 rounded-2xl shadow-lg">
-          <h3 className="font-semibold text-indigo-700 mb-3">Quick QR Verify</h3>
-          <QRScanner onDetected={(v) => setLastDetected(v)} />
-        </div>
-
-        {/* Single & Bulk upload */}
-        <div className="col-span-2 bg-white/80 p-6 rounded-2xl shadow-lg">
-          <h3 className="font-semibold text-indigo-700 mb-3">Upload Certificate(s)</h3>
-          <UploadForm mode="both" onUpload={(files) => console.log("Employer uploaded", files)} />
-        </div>
+      <div className="glass-effect p-8 rounded-3xl shadow-xl mb-8">
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Employer Dashboard</h2>
+        <p className="text-gray-600">Verify candidate certificates quickly and securely</p>
       </div>
 
-      <div className="mt-6 bg-white/80 p-4 rounded-2xl shadow-lg">
-        <h4 className="font-semibold">Last scanned data</h4>
-        <div className="mt-2 text-sm text-gray-700">{lastDetected ?? "No QR scanned yet"}</div>
+      {/* Tab Navigation */}
+      <div className="flex space-x-4 mb-8">
+        <button
+          onClick={() => setActiveTab("scan")}
+          className={`px-6 py-3 rounded-xl font-medium ${activeTab === "scan" ? "btn-primary text-white" : "bg-white text-gray-700"}`}
+        >
+          Scan QR
+        </button>
+        <button
+          onClick={() => setActiveTab("verify")}
+          className={`px-6 py-3 rounded-xl font-medium ${activeTab === "verify" ? "btn-primary text-white" : "bg-white text-gray-700"}`}
+        >
+          Verify Hash
+        </button>
+        <button
+          onClick={() => setActiveTab("upload")}
+          className={`px-6 py-3 rounded-xl font-medium ${activeTab === "upload" ? "btn-primary text-white" : "bg-white text-gray-700"}`}
+        >
+          Upload
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      <div className="glass-effect p-8 rounded-3xl shadow-xl">
+        {activeTab === "scan" && <QRScanner />}
+        {activeTab === "verify" && <VerifyForm />}
+        {activeTab === "upload" && <UploadForm mode="both" />}
       </div>
     </div>
   );
