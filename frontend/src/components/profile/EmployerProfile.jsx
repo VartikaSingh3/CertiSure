@@ -5,9 +5,9 @@ export default function EmployerProfile() {
     name: "ABC Pvt Ltd",
     email: "hr@abc.com",
     userType: "Employer",
-    contact: "",
-    address: "",
-    website: "",
+    contact: "+91 9876543210",
+    address: "Mumbai, India",
+    website: "www.abc.com",
   });
 
   const handleChange = (e) => {
@@ -15,44 +15,71 @@ export default function EmployerProfile() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow rounded">
-      <h2 className="text-2xl font-bold mb-4">Employer Profile</h2>
-      <div className="space-y-3">
-        <p><strong>Name:</strong> {profile.name}</p>
-        <p><strong>Email:</strong> {profile.email}</p>
-        <p><strong>User Type:</strong> {profile.userType}</p>
+    <div className="max-w-4xl mx-auto p-6 mt-20">
+      <div className="glass-effect p-8 rounded-3xl shadow-xl mb-8">
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Employer Profile</h2>
+        <p className="text-gray-600">Manage your company information</p>
       </div>
 
-      <h3 className="text-xl font-semibold mt-6 mb-2">Additional Details</h3>
-      <form className="space-y-3">
-        <input
-          type="text"
-          name="contact"
-          placeholder="Contact Number"
-          value={profile.contact}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="Company Address"
-          value={profile.address}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="text"
-          name="website"
-          placeholder="Company Website"
-          value={profile.website}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">
-          Save
+      <div className="glass-effect p-8 rounded-3xl shadow-xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+            <input
+              type="text"
+              name="name"
+              value={profile.name}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={profile.email}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Contact</label>
+            <input
+              type="text"
+              name="contact"
+              value={profile.contact}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Website</label>
+            <input
+              type="text"
+              name="website"
+              value={profile.website}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+        </div>
+        
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+          <textarea
+            name="address"
+            value={profile.address}
+            onChange={handleChange}
+            rows="3"
+            className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+        </div>
+        
+        <button className="btn-primary text-white px-6 py-3 rounded-xl font-medium">
+          Save Changes
         </button>
-      </form>
+      </div>
     </div>
   );
 }

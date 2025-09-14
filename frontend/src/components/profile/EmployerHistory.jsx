@@ -1,4 +1,3 @@
-
 export default function EmployerHistory() {
   const history = [
     { id: 1, action: "Scanned Certificate - ID12345", date: "2025-09-10" },
@@ -7,19 +6,25 @@ export default function EmployerHistory() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow rounded">
-      <h2 className="text-2xl font-bold mb-4">Employer Activity History</h2>
-      <ul className="space-y-2">
-        {history.map((item) => (
-          <li
-            key={item.id}
-            className="border p-3 rounded flex justify-between bg-gray-50"
-          >
-            <span>{item.action}</span>
-            <span className="text-sm text-gray-500">{item.date}</span>
-          </li>
-        ))}
-      </ul>
+    <div className="max-w-4xl mx-auto p-6 mt-20">
+      <div className="glass-effect p-8 rounded-3xl shadow-xl mb-8">
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Employer Activity History</h2>
+        <p className="text-gray-600">Track your verification activities</p>
+      </div>
+
+      <div className="glass-effect p-8 rounded-3xl shadow-xl">
+        <div className="space-y-4">
+          {history.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-center p-4 bg-white rounded-xl border border-gray-100"
+            >
+              <span className="text-gray-800">{item.action}</span>
+              <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{item.date}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
