@@ -17,7 +17,8 @@ export default function SignupForm() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/signup", form);
+      const res = await api.post("auth/signup", form);
+      console.log("Signup Done");
       const { token, user } = res.data;
 
       localStorage.setItem("token", token);
@@ -27,6 +28,9 @@ export default function SignupForm() {
       else if (user.userType === "employer") navigate("/dashboard/employer");
       else if (user.userType === "university") navigate("/dashboard/university");
     } catch (err) {
+      console.error("Signup Error:", err); // <-- logs full error object
+      console.error("Response Data:", err.response?.data); // <-- logs backend response
+      console.error("Status:", err.response?.status);
       setError(err.response?.data?.message || "Signup failed!");
     }
   };

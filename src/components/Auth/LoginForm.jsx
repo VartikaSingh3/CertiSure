@@ -13,7 +13,8 @@ export default function LoginForm() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/login", form); // 🔑 backend API
+      const res = await api.post("/auth/login", form);
+      console.log("Login DONE"); // 🔑 backend API
       const { token, user } = res.data;
 
       // save token in localStorage
