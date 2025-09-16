@@ -1,82 +1,72 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import api from "../../api";
 
 export default function SignupForm() {
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
-    userType: "student",
+    userType: "student", // default
   });
+  const [error, setError] = useState("");
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await api.post("/auth/signup", form);
+      const { token, user } = res.data;
 
-    // Mock signup (replace with API later)
-    const newUser = {
-      name: form.name,
-      email: form.email,
-      userType: form.userType,
-    };
+      localStorage.setItem("token", token);
+      login({ ...user, token });
 
-    // Save new user into context
-    login(newUser);
-
-    // Redirect based on role
-    if (newUser.userType === "student") {
-      navigate("/student/dashboard");
-    } else if (newUser.userType === "employer") {
-      navigate("/employer/dashboard");
-    } else if (newUser.userType === "university") {
-      navigate("/university/dashboard");
+      if (user.userType === "student") navigate("/dashboard/student");
+      else if (user.userType === "employer") navigate("/dashboard/employer");
+      else if (user.userType === "university") navigate("/dashboard/university");
+    } catch (err) {
+      setError(err.response?.data?.message || "Signup failed!");
     }
   };
 
   return (
-    <div className="w-full max-w-md glass-effect p-10 rounded-3xl shadow-xl">
-      <h2 className="text-3xl font-bold text-gray-800 mb-2">Create Account</h2>
-      <p className="text-gray-600 mb-8">Join CertiSure today</p>
-      
-      <form onSubmit={submit} className="space-y-6">
+    <div className="w-full max-w-md bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-xl">
+      <h2 className="text-2xl font-bold text-indigo-700 mb-4">Sign Up</h2>
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+      <form onSubmit={submit} className="space-y-4">
         <input
           name="name"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           placeholder="Full Name"
-          className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-3 border rounded"
           required
         />
-        
         <input
           name="email"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
-          placeholder="Email address"
-          type="email"
-          className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="Email"
+          className="w-full p-3 border rounded"
           required
         />
-        
         <input
           name="password"
+          type="password"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           placeholder="Password"
-          type="password"
-          className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-3 border rounded"
           required
         />
 
+        {/* userType dropdown */}
         <select
-          name="userType"
           value={form.userType}
           onChange={(e) => setForm({ ...form, userType: e.target.value })}
-          className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-3 border rounded"
         >
           <option value="student">Student</option>
           <option value="employer">Employer</option>
@@ -85,18 +75,11 @@ export default function SignupForm() {
 
         <button
           type="submit"
-          className="w-full py-4 btn-primary text-white font-semibold rounded-xl"
+          className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg shadow-lg hover:scale-105 transition"
         >
           Sign Up
         </button>
       </form>
-      
-      <p className="mt-8 text-center text-gray-600">
-        Already have an account?{" "}
-        <Link className="text-purple-600 font-medium hover:underline" to="/login">
-          Login
-        </Link>
-      </p>
     </div>
   );
 }
